@@ -1,0 +1,20 @@
+---
+const { tenant } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>🐼 Koala88 Custom</title>
+  </head>
+  <body style="background:#0f172a; color:#e5e7eb">
+    <header style="padding:1.5rem">
+      <strong>Koala88 — Custom Tenant</strong>
+    </header>
+
+    <main style="padding:2rem">
+      <slot />
+    </main>
+  </body>
+</html>

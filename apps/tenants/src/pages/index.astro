@@ -1,0 +1,41 @@
+---
+export const prerender = false;
+
+const host = Astro.request.headers.get("host") ?? "";
+const subdomain = host.split(".")[0];
+
+let Layout;
+let Page;
+let hasTenantPage = true;
+
+// 1️⃣ Resolve layout (tenant override → shared)
+try {
+  Layout = (await import(
+    `../tenants/${subdomain}/layout.astro`
+  )).default;
+} catch {
+  Layout = (await import(
+    `../tenants/_shared/layouts/BaseLayout.astro`
+  )).default;
+}
+
+// 2️⃣ Resolve page (tenant override → fallback)
+try {
+  Page = (await import(
+    `../tenants/${subdomain}/index.astro`
+  )).default;
+} catch {
+  hasTenantPage = false;
+}
+---
+
+<Layout tenant={subdomain}>
+  {hasTenantPage ? (
+    <Page />
+  ) : (
+    <>
+      <h1>Default Tenant</h1>
+      <p>Subdomain: {subdomain}</p>
+    </>
+  )}
+</Layout>

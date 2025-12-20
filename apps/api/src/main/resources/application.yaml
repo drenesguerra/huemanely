@@ -1,0 +1,17 @@
+ktor:
+    development: true
+    application:
+        modules:
+            - com.ApplicationKt.module
+    deployment:
+        port: 8080
+        watch:
+          - classes
+          - resources
+
+databases:
+  # Shared key for the relational DB settings
+  sql:
+    maximumPoolSize: 3
+    isAutoCommit: false
+    transactionIsolation: "TRANSACTION_REPEATABLE_READ"

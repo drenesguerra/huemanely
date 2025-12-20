@@ -1,0 +1,32 @@
+# ===== Java / Kotlin / Gradle =====
+.gradle/
+build/
+bin/
+out/
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ===== Logs =====
+*.log
+
+# ===== Env =====
+.env
+.env.*
+
+# ===== Astro =====
+node_modules/
+dist/
+.astro/
+
+# ===== OS =====
+.DS_Store
+
+
+# ---- MONOREPO FIX ----
+!apps/
+!apps/**/
