@@ -1,0 +1,98 @@
+---
+// Navbar.astro
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/fresh-produce", label: "Fresh Produce" },
+  { href: "/cleaning-services", label: "Cleaning Services" },
+  { href: "/contact", label: "Contact Us" },
+];
+const currentPath = Astro.url.pathname; // server-safe way to get current path
+---
+
+<nav id="navbar" class="fixed top-0 left-0 w-full z-50 bg-white py-6 md:py-8 transition-all duration-500 ease-in-out">
+  <div class="max-w-full mx-auto flex items-center justify-between px-6 md:px-12">
+    <!-- Logo -->
+    <a href="/k88" class="flex items-center space-x-2">
+      <img id="navbar-logo" src="/images/k88-logo.png" alt="K88 Logo" class="h-20 opacity-100 transition-all duration-500 ease-in-out"/>
+    </a>
+
+    <!-- Desktop Menu -->
+    <div id="desktop-menu" class="hidden md:flex items-center space-x-10 transition-all duration-500 ease-in-out">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class={`text-base uppercase tracking-wide transition-all duration-300 ${
+            currentPath === link.href
+              ? "font-semibold text-gray-900"
+              : "text-gray-600 hover:text-gray-900"
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden text-gray-800 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed top-0 right-0 w-4/5 max-w-sm h-screen bg-white shadow-2xl z-40 transform translate-x-full transition-transform duration-500 ease-in-out">
+    <div class="flex flex-col space-y-6 px-6 py-8">
+      <button id="mobile-close" class="self-end text-gray-600 hover:text-black text-2xl">✕</button>
+      {navLinks.map(link => (
+        <a href={link.href} class="text-lg">{link.label}</a>
+      ))}
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 hidden"></div>
+</nav>
+
+<!-- Client-side interactivity -->
+<script is:inline>
+  let isOpen = false;
+  const navbar = document.getElementById("navbar");
+  const logo = document.getElementById("navbar-logo");
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileClose = document.getElementById("mobile-close");
+  const overlay = document.getElementById("overlay");
+
+  // Scroll effect - makes navbar fixed immediately when scrolled
+  const updateNavbar = () => {
+    if (window.scrollY > 0) {
+      // Add fixed positioning and adjust size
+      navbar.classList.add("fixed", "top-0", "left-0", "py-3", "bg-white/95", "shadow-md");
+      navbar.classList.remove("py-6", "md:py-8");
+      logo.classList.add("h-12", "opacity-90");
+      logo.classList.remove("h-20", "opacity-100");
+    } else {
+      // Remove fixed positioning and restore original size
+      // navbar.classList.remove("fixed", "top-0", "left-0", "py-3", "bg-white/95", "shadow-md");
+      navbar.classList.remove("bg-white/95", "shadow-md");
+      navbar.classList.add("py-6", "md:py-8");
+      logo.classList.add("h-20", "opacity-100");
+      logo.classList.remove("h-12", "opacity-90");
+    }
+  };
+
+  window.addEventListener("scroll", updateNavbar);
+  updateNavbar();
+
+  // Mobile menu toggle
+  const toggleMenu = () => {
+    isOpen = !isOpen;
+    mobileMenu.classList.toggle("translate-x-full", !isOpen);
+    overlay.classList.toggle("hidden", !isOpen);
+  };
+
+  hamburger.addEventListener("click", toggleMenu);
+  mobileClose.addEventListener("click", toggleMenu);
+  overlay.addEventListener("click", toggleMenu);
+</script>

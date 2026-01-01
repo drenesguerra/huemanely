@@ -1,22 +1,18 @@
----
-// HeroBanner.astro
-// You can later make `backgroundImage` a prop if needed
----
+<section>
+<div class="relative bg-[url('/images/fresh-produce1920.webp')] bg-no-repeat bg-center bg-cover bg-[50%_50%]">
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/[0.02] to-black/[0.02]"></div>
 
-<div
-   class="bg-[url('/images/homebanner1920.webp')] bg-no-repeat bg-center
-   bg-auto 
-   bg-cover
-   bg-[50%_50%]"
->
-  <section class="relative max-w-7xl mx-auto px-6 py-30 md:py-32 flex flex-col items-center justify-center">
-    
-  </section>
+  <!-- Content with controlled padding -->
+   
+  <div class="relative max-w-7xl mx-auto px-6 py-16 md:py-20">
+    <h1 class="text-3xl md:text-[55px] lg:text-[55px] text-white font-black drop-shadow-lg text-center tracking-tight">
+      Fresh produce
+    </h1>
+  </div>
+  
 </div>
-
-
-
-
+</section>
 
 <section class="pt-16 pb-16">
   <!-- Grid -->
@@ -36,14 +32,14 @@
 
       <h3 class="mt-8 text-2xl font-semibold">Fresh produce</h3>
 
-      <p class="mt-4 text-gray-700 max-w-md text-xl">
+      <p class="mt-4 text-gray-700 max-w-md">
         Being <span class="font-semibold">HACCP certified</span> and hospitality accredited, 
         we provide only the freshest produce at an unbeatable price.
       </p>
 
       <a
         href="/k88/fresh-produce"
-        class="mt-6 text-red-600 font-semibold tracking-wide flex items-center gap-2 group text-lg"
+        class="mt-6 text-red-600 font-semibold tracking-wide flex items-center gap-2 group"
       >
         VISIT THE PANTRY
         <span class="transition-transform duration-200 group-hover:translate-x-1">
@@ -69,14 +65,14 @@
 
       <h3 class="mt-8 text-2xl font-semibold">Cleaning services</h3>
 
-      <p class="mt-4 text-gray-700 max-w-md text-xl">
+      <p class="mt-4 text-gray-700 max-w-md">
         We offer a full range of cleaning services that are adaptable
         to any budget.
       </p>
 
       <a
         href="/k88/cleaning-services"
-        class="mt-6 text-red-600 font-semibold tracking-wide flex items-center gap-2 group text-lg"
+        class="mt-6 text-red-600 font-semibold tracking-wide flex items-center gap-2 group"
       >
         LEARN MORE
         <span class="transition-transform duration-200 group-hover:translate-x-1">

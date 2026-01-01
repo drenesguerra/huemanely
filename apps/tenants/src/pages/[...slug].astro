@@ -1,0 +1,52 @@
+---
+export const prerender = false;
+
+const isHtmx = Astro.request.headers.get("hx-request") === "true";
+
+const host = Astro.request.headers.get("host") ?? "";
+const subdomain = host.split(".")[0];
+
+const slug = Astro.params.slug;
+const pageName = !slug ? "index" : slug;
+
+let Layout;
+
+try {
+  Layout = (await import(
+    `../tenants/${subdomain}/layout.astro`
+  )).default;
+} catch {
+  Layout = (await import(
+    `../tenants/_shared/layouts/BaseLayout.astro`
+  )).default;
+}
+
+let Page;
+
+try {
+  // Try tenant-specific page
+  Page = (await import(
+    `../tenants/${subdomain}/${pageName}.astro`
+  )).default;
+} catch {
+  try {
+    // Fallback to shared page
+    Page = (await import(
+      `../tenants/_shared/pages/${pageName}.astro`
+    )).default;
+  } catch {
+    // Default NotFound
+    Page = (await import(
+      `../tenants/_shared/pages/NotFound.astro`
+    )).default;
+  }
+}
+
+---
+{isHtmx ? (
+  Page ? <Page /> : <h1>404</h1>
+) : (
+  <Layout tenant={subdomain}>
+    {Page ? <Page /> : <h1>404</h1>}
+  </Layout>
+)}

@@ -1,8 +1,85 @@
-body {
-  font-family: "Inter";
-  background: #0f172a;
+@theme {
+  --animate-fadeIn: fadeIn 0.3s ease-in-out;
+  --animate-slideDown: slideDown 0.35s ease-in-out;
+  --animate-fadeOut: fadeOut 0.3s ease-in-out;
+  --animate-slideUp: slideUp 0.35s ease-in-out;
 }
 
-.hero {
-  color: #38bdf8;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --navbar-height: 6rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+nav {
+  will-change: transform;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Poppins', arial, sans-serif;
+  overflow-x: hidden
 }

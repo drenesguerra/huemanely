@@ -1,4 +1,7 @@
 ---
+import Navbar from "./components/Navbar.astro";
+import Footer from "./components/Footer.astro";
+import SocialSection from "./components/SocialSection.astro";
 const { tenant } = Astro.props;
 ---
 
@@ -6,15 +9,71 @@ const { tenant } = Astro.props;
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>🐼 Koala88 Custom</title>
-  </head>
-  <body style="background:#0f172a; color:#e5e7eb">
-    <header style="padding:1.5rem">
-      <strong>Koala88 — Custom Tenant</strong>
-    </header>
+    <title>Koala88</title>
 
-    <main style="padding:2rem">
+    <!-- Shared + tenant CSS -->
+    <link rel="stylesheet" href="/src/tenants/_shared/css/base.css" />
+    <link rel="stylesheet" href="/src/tenants/koala88/theme.css" />
+  </head>
+
+  <body>
+    <Navbar/>
+
+    <div style="display: none;"
+  id="loading-indicator"
+  class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden"
+>
+  <div class="animate-spin rounded-full h-10 w-10 border-4 border-white border-t-transparent"></div>
+</div>
+
+
+    <main id="main-content" class="mt-32 md:mt-36">
       <slot />
     </main>
+
+    <SocialSection />
+    <Footer />
+
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+    <script>
+  function updateActiveNav() {
+    const path = window.location.pathname;
+
+    document.querySelectorAll(".nav-link").forEach(link => {
+      const linkPath = link.getAttribute("data-path");
+      link.classList.toggle("text-sky-400", linkPath === path);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", updateActiveNav);
+  document.body.addEventListener("htmx:afterSwap", updateActiveNav);
+</script>
+
+<script>
+  const loader = document.getElementById("loading-indicator");
+
+  document.body.addEventListener("htmx:beforeRequest", () => {
+    loader.classList.remove("hidden");
+  });
+
+  document.body.addEventListener("htmx:afterSwap", () => {
+    loader.classList.add("hidden");
+  });
+
+  document.body.addEventListener("htmx:responseError", () => {
+    loader.classList.add("hidden");
+  });
+</script>
+<script>
+  window.addEventListener("popstate", () => {
+    htmx.ajax("GET", window.location.pathname, {
+      target: "#main-content",
+      swap: "innerHTML"
+    });
+  });
+</script>
+
+
   </body>
 </html>
